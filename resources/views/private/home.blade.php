@@ -40,7 +40,7 @@
               </div>
               <div class="mb-3">
                   <label for="description" class="form-label">Description</label>
-                  <input class="form-control" type="description" id="description" name="description" placeholder="Description">
+                  <input class="form-control" type="text" id="description" name="description" placeholder="Description">
               </div>
               <div class="mb-3">
                   <div>Coordinates</div>
