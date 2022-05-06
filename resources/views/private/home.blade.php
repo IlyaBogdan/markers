@@ -39,7 +39,7 @@
                   <input class="form-control" type="text" id="mobile" name="mobile" placeholder="Mobile">
               </div>
               <div class="mb-3">
-                  <label for="description" class="form-label">Password</label>
+                  <label for="description" class="form-label">Description</label>
                   <input class="form-control" type="description" id="description" name="description" placeholder="Description">
               </div>
               <div class="mb-3">
