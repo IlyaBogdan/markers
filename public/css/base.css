@@ -1,0 +1,7 @@
+.public-form {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 500px;
+    margin: 200px auto;
+    padding: 2%;
+}

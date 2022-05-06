@@ -1,0 +1,14 @@
+#map {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-image: url('../world.svg');
+    background-position: center;
+    background-size: 800px 550px;
+}
+
+#description {
+    display: none
+}

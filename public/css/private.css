@@ -1,0 +1,51 @@
+.action-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#main {
+    height: 600px;
+}
+
+#pseudo-map {
+    display: none;
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
+}
+
+.action-bar {
+    height: 365px;
+}
+
+#description-section {
+    position: absolute;
+    top: 62%;
+}
+
+#add-form {
+    position: absolute;
+    top: 52px;
+    left: 37%;
+    background-color: beige;
+    display: none;
+    margin: 40px auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 515px;
+    height: 365px;
+    padding: 15px;    
+}
+#add-form .top {
+    display: flex;
+    justify-content: space-between;
+}
+#add-form #coordinates {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 80px;
+}
+#add-form #coordinates input {
+    width: 40%;
+}
