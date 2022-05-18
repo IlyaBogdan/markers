@@ -8,6 +8,9 @@
     <form method="POST" action="{{ route('user.login') }}">
         @csrf
         <div class="mb-3">
+            @error('auth')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <label for="login" class="form-label">Login</label>
             <input class="form-control" type="text" id="login" name="login" placeholder="Login">
         </div>
