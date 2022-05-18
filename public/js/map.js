@@ -1,24 +1,73 @@
-var map = document.getElementById('map');
-map.width = 800;
-map.height = 550;
-ctx = map.getContext('2d');
+async function render(all=true, mobile) {
 
-function drawMarker(x, y) {
+    document.getElementById('map').innerHTML = '';
+    let descriptionBlock = document.getElementById('description-section');
+    descriptionBlock.style.display = "none";
+    descriptionBlock.innerHTML = '';
 
-    // нормализация координат
-    x += 180;
-    y += 90;
+    // get locations from server
+    let markersFromServer;
 
-    x = map.width / 360 * x;
-    y = map.height / 180 * y;
+    if (all) markersFromServer = await getMarker();
+    else {
+        markersFromServer = [await getMarker("one", mobile)];
+        descriptionBlock.style.display = "block";
+        let marker = markersFromServer[0];
+        let description = '<div>';
+        description += `<p>ID: ${marker.id}</p>`;
+        description += `<p>Mobile: ${marker.mobile}</p>`;
+        description += `<p>Description: ${marker.description}</p>`;
+        description += `<p>Coordinates: ${marker.x}, ${marker.y}</p>`;
+        description += '<p><button style="width: 200px;" class="btn btn-primary" onclick="render();"}>Clear</button></p>'
+        description += '</div>';
+        descriptionBlock.innerHTML = description;
+    };
 
-    // отрисовка
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, Math.PI*2, false);
-    ctx.strokeStyle = "red";
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
+    console.log(markersFromServer);
+
+    const markersToMap = [] // in this array i'll set markers (Feauture object)
+
+    for (let i = 0; i < markersFromServer.length; i++) {
+        const current = markersFromServer[i];
+
+        let marker = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([current.y, current.x], 'EPSG:4326', 'EPSG:3857')),
+            mobile: current.mobile,
+            description: current.description
+        });
+
+        markersToMap.push(marker);
+    };
+
+    // settings for map and marker style
+    const vectorSource = new ol.source.Vector({
+        features: markersToMap
+    });
+    
+    const iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(({
+          anchor: [0.5, 46],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          opacity: 1,
+          src: '../marker.png'
+        }))
+    });
+    
+    const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: iconStyle
+    });
+
+    const map = new ol.Map({
+        target: 'map',
+        layers: [new ol.layer.Tile({source: new ol.source.OSM()}), vectorLayer],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 0
+        })
+    });
+
 }
 
 async function getMarker(mode="all", mobile) {
@@ -35,29 +84,6 @@ async function getMarker(mode="all", mobile) {
     });
 
     return await result;
-}
+};
 
-async function drawMarkers(mode="all", mobile){
-    getMarker(mode, mobile).then((markers) => {
-        console.log(markers);
-        ctx.clearRect(0, 0, map.width, map.height);
-
-        if (mode == "one") {
-            drawMarker(markers.x, markers.y);
-            description  = `<p><b>ID: </b>${markers.id}<p>`;
-            description += `<p><b>Mobile: </b>${markers.mobile}<p>`;
-            description += `<p><b>Description: </b>${markers.description}<p>`;
-            description += `<p><b>Coordinates: </b>${markers.x} ${markers.y}<p>`;
-            descriptionElement = document.getElementById('description-section');
-            descriptionElement.style.display = "block";
-            descriptionElement.innerHTML = description;
-        }
-
-        for (let i = 0; i < markers.length; i++) {
-            let marker = markers[i];
-            drawMarker(marker.x, marker.y);
-        }
-    })
-}
-
-drawMarkers();
+render();
