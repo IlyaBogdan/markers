@@ -1,10 +1,30 @@
 #map {
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
+
     border: 1px solid black;
-    background-image: url('../world.svg');
-    background-position: center;
-    background-size: 800px 550px;
+
+    height: 100%;
+    width: 100%;
+}
+
+#map ul, 
+#map .ol-unselectable:nth-child(2) button, 
+#map .ol-unselectable:nth-child(3) button {
+    display: none;
+}
+
+#map .ol-unselectable:nth-child(1) button {
+    width: 40px;
+    height: 40px;
+    margin: 5px 10px;
+    background-color: brown;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+#map .ol-unselectable:nth-child(1) button:hover {
+    background-color: rgb(243, 11, 11);
 }
