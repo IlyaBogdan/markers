@@ -13,7 +13,8 @@ function showForm(form) {
 
         if (form == "find") {
             let mobile = prompt("Input mobile for marker");
-            drawMarkers("one", mobile);
+            if (!mobile) return;
+            render(false, mobile);
         }
             
         if (form == "delete"){
@@ -22,7 +23,8 @@ function showForm(form) {
                 url: `http://localhost:8000/api/delete-marker/${id}`,
                 method: "DELETE",
                 success: function(data) {
-                    alert(data.status);
+                    alert(data);
+                    render();
                 }
             });
         }
@@ -42,8 +44,10 @@ function addMarker() {
         method: "PUT",
         headers: { "Content-type": "application/json" },
         data: JSON.stringify(data),
-        success: function(res) {
+        success: function() {
             alert("Marker is added!");
+            showForm("close-form");
+            render();
         }
     });
 }
