@@ -5,6 +5,8 @@
 @section('static')
   <link rel="stylesheet" href="{{ asset('css/private.css') }}">
   <link rel="stylesheet" href="{{ asset('css/map.css') }}">
+
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
 @endsection
 
 @section('private')
@@ -26,7 +28,8 @@
         <div class="row" id="description-section"></div>
       </div>
       <div class="col-7">
-        <canvas id="map"></canvas>
+
+        <div id="map" class="map"></div>
 
         <div id="add-form">
           <div class="top">
