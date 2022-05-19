@@ -13,14 +13,20 @@ async function render(all=true, mobile) {
         markersFromServer = [await getMarker("one", mobile)];
         descriptionBlock.style.display = "block";
         let marker = markersFromServer[0];
-        let description = '<div>';
-        description += `<p>ID: ${marker.id}</p>`;
-        description += `<p>Mobile: ${marker.mobile}</p>`;
-        description += `<p>Description: ${marker.description}</p>`;
-        description += `<p>Coordinates: ${marker.x}, ${marker.y}</p>`;
-        description += '<p><button style="width: 200px;" class="btn btn-primary" onclick="render();"}>Clear</button></p>'
-        description += '</div>';
-        descriptionBlock.innerHTML = description;
+        if (!!marker.id) {
+            let description = '<div>';
+            description += `<p>ID: ${marker.id}</p>`;
+            description += `<p>Mobile: ${marker.mobile}</p>`;
+            description += `<p>Description: ${marker.description}</p>`;
+            description += `<p>Coordinates: ${marker.x}, ${marker.y}</p>`;
+            description += '<p><button style="width: 200px;" class="btn btn-primary" onclick="render();"}>Clear</button></p>'
+            description += '</div>';
+            descriptionBlock.innerHTML = description;
+        } else {
+            alert(`Not found marker with mobile ${mobile}`);
+            render();
+            return;
+        }
     };
 
     console.log(markersFromServer);
