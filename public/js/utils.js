@@ -25,6 +25,9 @@ function showForm(form) {
                 success: function(data) {
                     alert(data);
                     render();
+                },
+                error: function(){
+                    alert(`Not found marker with id ${id}`);
                 }
             });
         }
